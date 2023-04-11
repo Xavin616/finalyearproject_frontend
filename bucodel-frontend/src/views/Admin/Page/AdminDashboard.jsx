@@ -1,16 +1,18 @@
-import { Add, BookmarkRounded, MoreHoriz, Person } from '@mui/icons-material'
+import { BookmarkRounded, Person } from '@mui/icons-material'
 import { Avatar, Button, IconButton } from '@mui/material'
 import axios from 'axios'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { FaChalkboardTeacher } from 'react-icons/fa'
+import NewNotice from '../../../components/Admin/Page/NewNotice'
 import config from '../../../config'
 import Calendar from '../../Lecturer/Classroom/LecturerCalendar'
 import '../Page/css/dashboard.css'
 
-export default function AdminDashboard() {
+export default function AdminDashboard({ admin }) {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true);
+
   const [courseCount, setCourseCount] = useState("");
   useEffect(() => {
     const fetchCourseCount = async () => {
@@ -80,28 +82,7 @@ export default function AdminDashboard() {
         </div>
         <div className='level-2'>Level 2</div>
         <div className='level-3'>
-          <div className="level-3-box">
-            <div className='admin-dash-assign-header'>
-              <h4>Assignment</h4>
-              <Button>View All</Button>
-            </div>
-            <div className='admin-dash-assign-list'>
-              <AssignmentItem />
-              <AssignmentItem />
-              <AssignmentItem />
-              <AssignmentItem />
-              <AssignmentItem />
-              <AssignmentItem />
-              <AssignmentItem />
-              <AssignmentItem />
-              <AssignmentItem />
-              <AssignmentItem />
-              <AssignmentItem />
-              <AssignmentItem />
-              <AssignmentItem />
-              <AssignmentItem />
-            </div>
-          </div>
+
           <div className="dashboardNotice">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h4>Notice</h4>
@@ -113,9 +94,12 @@ export default function AdminDashboard() {
                 Add +
               </Button>
             </div>
-            {notices.map((p) => (
-              <Notice notice={p} key={p._id} />
-            ))}
+            <div className="noticeContainer">
+              {notices.map((p) => (
+                <Notice notice={p} key={p._id} />
+              ))}
+            </div>
+
           </div>
         </div>
       </div>
@@ -123,21 +107,8 @@ export default function AdminDashboard() {
         <div className='level-4'>
           <Calendar />
         </div>
-        {/* <div className="level-5">
-          <div className='admin-task-header'>
-            <Button sx={{ textTransform: 'none', fontWeight: 'bold', float: 'right' }}>
-              <Add /> Add Task
-            </Button>
-          </div>
-          <div className='admin-task-list'>
-            <TaskItem />
-            <TaskItem />
-            <TaskItem />
-            <TaskItem />
-            <TaskItem />
-          </div>
-        </div> */}
       </div>
+      <NewNotice open={open} setOpen={setOpen} author={admin._id} />
     </div>
   )
 }
@@ -157,29 +128,6 @@ function Notice({ notice }) {
       <div className="notice-dash-body">
         <p>{notice.description}</p>
       </div>
-    </div>
-  )
-}
-
-function TaskItem() {
-  return (
-    <div className="admin-task-item">
-      <IconButton sx={{ width: '30px', height: '20px', marginLeft: '90%', position: 'relative' }}>
-        <MoreHoriz />
-      </IconButton>
-      <p>Assertively aggregate 24/365 infomediaries rather than inexpensive communities.</p>
-    </div>
-  )
-}
-
-function AssignmentItem() {
-  return (
-    <div className='admin-dash-assign-item'>
-      <div className='ass-info'>
-        <h6 className='ass-info-title'>SENG 302: Assignment 1</h6>
-        <p className='ass-info-date'>Due, Dec 5 • 8:00 PM</p>
-      </div>
-      <div className='pill'>10 Marks</div>
     </div>
   )
 }

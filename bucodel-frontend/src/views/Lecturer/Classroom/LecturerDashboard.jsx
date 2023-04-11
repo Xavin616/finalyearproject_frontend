@@ -93,7 +93,13 @@ const Dashboard = ({ lecturer }) => {
             </div>
           </div>
         </div>
-        <div className="dashboardContent"></div>
+        <div className="dashboardContent flexrow">
+          <img src="https://res.cloudinary.com/manlikeemma/image/upload/v1677670946/BUCODEL/undraw_reading_time_re_phf7_1_sboim1.svg" alt="" style={{ height: "200px" }} />
+          <div className="welcomeText flexColumn">
+            <h4>Hello {lecturer.name},</h4>
+            <h5>Welcome to our platform, where you can discover, learn, and achieve your academic goals. Let's get started</h5>
+          </div>
+        </div>
         <div className="dashboardAssignmentNoticeBoard flexrow">
           <div className="dashboardAssignment">
             <div className='flexrow sb ac'>
@@ -118,9 +124,11 @@ const Dashboard = ({ lecturer }) => {
                 Add +
               </Button>
             </div>
-            {notices.map((p) => (
-              <Notice notice={p} key={p._id} />
-            ))}
+            <div className="noticeContainer">
+              {notices.map((p) => (
+                <Notice notice={p} key={p._id} />
+              ))}
+            </div>
           </div>
         </div>
 
@@ -130,7 +138,7 @@ const Dashboard = ({ lecturer }) => {
           <Calendar />
         </div>
       </div>
-      <NewNotice open={open} setOpen={setOpen} author={lecturer._id}/>
+      <NewNotice open={open} setOpen={setOpen} author={lecturer._id} />
     </div>
   )
 }
@@ -138,7 +146,7 @@ const Dashboard = ({ lecturer }) => {
 const Assignment = (assignedAssignment) => {
   const formattedDate = moment(assignedAssignment.assignedAssignment.dueDate).format("Do MMM, h:mm a");
   return (
-    <Link to={`/doassignment/${assignedAssignment.assignedAssignment._id}`} style={{ textDecoration: 'none' }}>
+    <Link to={`/lecturerdoassignment/${assignedAssignment.assignedAssignment._id}`} style={{ textDecoration: 'none' }}>
       <div className="assignmentDash flexrow sb">
         <div className='flexColumn'>
           <h4>{`${assignedAssignment.assignedAssignment.courseId.courseabrev} : ${assignedAssignment.assignedAssignment.title}`}</h4>
